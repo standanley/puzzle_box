@@ -1,7 +1,10 @@
 include <extrude_test2.scad>
+include <mazes.scad>
 
-w = 0.03;
-d = 0.1;
+h = 0.06;
+w = 0.05;
+d = 0.025;
+inset = 0.025;
 eps = 0.01;
 
 //cube();
@@ -9,26 +12,31 @@ eps = 0.01;
 //cut_cube();
 
 
-module top() {
-    translate([0,0,1])
-    rotate([1,0,0]*45)
-    translate([.5, 0, 0])
-    cube([1+2*eps, w, d*2], center=true);
+
+//cube([1,1,1]);
+
+module rail(length, gap=0) {
+    // gap makes the rail bigger, for use with difference
+    translate([0,inset-gap,-eps]) cube([length, d+2*gap, h+eps+gap]);
+    translate([0, inset-gap, h-d-gap]) cube([length, w+2*gap, d+2*gap]);
 }
 
-module top_complete() {
-    
-    top();
-    mirror([1,-1,0]) top();
-    translate([1,0,0]) rotate(90) top();
-    translate([0,1,0]) mirror([1,-1,0]) rotate(90) top();
-}
 
+module sled_with_rails(maze1) {
 difference() {
+color([0.5, 0, 0]) sled(maze1);
+rail(0.95, .003);
 
-    //cube([1,1,1]);
-    cut_cube();
-    top_complete();
-    translate([0,0,1]) mirror([0,0,1]) top_complete();
+translate([-.5, 0, 0])
+translate([0,.5,0])
+mirror([0,1,0])
+translate([0,-.5,0])
+rail(2, .003);
+}
 }
 
+//sled_with_rails(maze_a);
+
+
+translate([.07,0,0]) cube([.1,.1,.03]);
+translate([0,0,.125]) rotate(-atan(sqrt(2)), v=[1,-1,0]) rail(0.15);
