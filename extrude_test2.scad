@@ -110,14 +110,18 @@ module cube_bottom() {
     //cylinder(circle_h, circle_outer, circle_outer, $fn=36);
     
     
-    cube([1,1,cube_thickness]);
+    cube([1,.4,cube_thickness]);
+    cube([.4,1,cube_thickness]);
     cube([cube_thickness, 1, 0.4]);
     cube([1, cube_thickness, 0.4]);
+    
     cube([0.4, cube_thickness, 1]);
     cube([cube_thickness, 0.4, 1]);
+    
     translate([0,1-cube_thickness, 0]) cube([.4, cube_thickness, .4]);
     translate([1-cube_thickness, 0, 0]) cube([cube_thickness, 0.4, .4]);
     translate([0,0,1-cube_thickness]) cube([.4, .4, cube_thickness]);
+    
 }
 
 module cube_top() {
@@ -126,6 +130,8 @@ module cube_top() {
     translate([1,1,1]*translation)rotate(-240-60*rotation, v=[1,1,1]) make_corner_give() my_extrusion_E();
     
     translate([1-cube_thickness, 1-.4, 1-.4]) cube([cube_thickness, .4, .4]);
+    translate([1-.4, 1-cube_thickness, 1-.4]) cube([.4, cube_thickness, .4]);
+    translate([1-.4, 1-.4, 1-cube_thickness]) cube([.4, .4, cube_thickness]);
 }
 
 /*
