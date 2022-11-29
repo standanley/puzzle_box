@@ -8,12 +8,17 @@ include <rails.scad>
 //maze_print(maze_c);
 //latch_top();
 //latch_bottom();
-cube_Z();
-cube_A();
-cube_B();
-cube_C();
-cube_D();
-cube_E();
+
+
+//cube_Z();
+//cube_A();
+//cube_B();
+//cube_C();
+//cube_D();
+//cube_E();
+
+print_Z();
+
 
 wall_thickness = 0.05;
 cut_depth = wall_thickness/2;
@@ -23,6 +28,11 @@ cut_ZA = sqrt(3)/6;
 cut_AB = sqrt(3)/3;
 cut_BC = 0.9;
 cut_DE = 1.25;
+
+
+module print_Z() {
+    translate([0,0,cut_ZA]) rotate(180+atan(sqrt(2)), v=[1,-1,0]) translate([0,0,-1+start])cube_Z();
+}
 
 module cut1(points) {
     //function warp(p) = [p[0]*sqrt(3)/2, p[1] - p[0]*1/2];
@@ -34,8 +44,8 @@ module cut1(points) {
     
     rotate(180-atan(sqrt(2)), v=[1,-1,0]) 
     rotate(-45)
-    translate([0,0,-1])
-    linear_extrude(height=1, center=false, convexity=10)
+    translate([0,0,-1.2])
+    linear_extrude(height=2, center=false, convexity=10)
     for ( i = [0 : len(points)-2]) {
         p1_unwarp = points[i];
         p2_unwarp = points[i+1];
@@ -94,10 +104,14 @@ module cube_A() {
 
 
 module cube_B() {
-    pattern = [[1,.2], [.9, .25]];
+    // NOTE to avoid visual weirdness, the first angle made by 
+    // pattern1 and pattern2 have to follow some relationship
+    pattern1 = [[1,.2], [.9, .2]];
+    pattern2 = [[1.0, .8], [0.9, 0.7], [.85, .85]];
     difference() {
         cube_slice(cut_AB+visualization_eps, cut_BC - visualization_eps);
-        cut_all(pattern);
+        cut_all(pattern1);
+        translate([1,1,1]) rotate(60, [1,1,1]) mirror([1,1,1])  cut_all(pattern2);
     }
 }
 
@@ -117,11 +131,12 @@ module cube_D() {
 
 
 module cube_E() {
-    pattern = [[1,.2], [.9, .25]];
+    pattern = [[.2,0],[.3,.07],[.22,.15],[.1,.1]];
     difference() {
         cube_slice(cut_DE+visualization_eps, 2);
-        cut_all(pattern);
+        translate([1,1,1]) rotate(60, [1,1,1]) mirror([1,1,1])  cut_all(pattern);
     }
+    //translate([1,1,1])mirror([1,1,1])  cut_all(pattern);
 }
 
 module cube_slice(start, end) {

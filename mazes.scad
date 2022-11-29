@@ -3,7 +3,7 @@ wall_radius = 0.05;//1/22;
 spacing = (1-2*wall_radius)/5;//hall_thickness + wall_radius * 2;
 hall_thickness = spacing - wall_radius*2;
 pointer_thickness = hall_thickness - 0.01;
-fn = 15;
+fn = 10;
 
 slide_init = 0*(2*wall_radius + spacing/2);//0*0.99*spacing;
 together = 0*spacing + 0*0.51*spacing + 0*spacing*$t;

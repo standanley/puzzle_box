@@ -1,10 +1,18 @@
 include <extrude_test2.scad>
 include <mazes.scad>
 include <rails.scad>
+include <print_cube.scad>
 //cut_cube();
 //cube();
-cube_top();
-cube_bottom();
+//cube_top();
+//cube_bottom();
+
+cube_Z();
+cube_A();
+cube_B();
+cube_C();
+cube_D();
+cube_E();
 
 box_thickness = 0.1;
 //translate([-2.0,0,0]) 
@@ -71,15 +79,15 @@ rail_clearance = 0.01;
 
 translate([0,0,1]) {
     positioned_rails();
-    //translate([slide_a, 0, 0]) color([0.5, 0, 0]) //sled_with_rails(maze_a);
+    translate([slide_a, 0, 0]) color([0.5, 0, 0]) sled_with_rails(maze_a);
 }
 translate([0,1,0]) rotate([-90,-90,0]) {
     positioned_rails();
-    //translate([slide_b, 0, 0]) color([0, .5, 0]) sled(maze_b);
+    translate([slide_b, 0, 0]) color([0, .5, 0]) sled(maze_b);
 }
 translate([1,0,0]) rotate([90,0,90]) {
     positioned_rails();
-    //translate([slide_c, 0, 0]) color([.2, .2, .5]) sled(maze_c);
+    translate([slide_c, 0, 0]) color([.2, .2, .5]) sled(maze_c);
 }
 
 
