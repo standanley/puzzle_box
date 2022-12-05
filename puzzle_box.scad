@@ -79,7 +79,8 @@ rail_clearance = 0.01;
 
 translate([0,0,1]) {
     positioned_rails();
-    translate([slide_a, 0, 0]) color([0.5, 0, 0]) sled_with_rails(maze_a);
+    translate([slide_a, 0, 0]) color([0.5, 0, 0]) sled_with_rails(maze_a)
+    ;
 }
 translate([0,1,0]) rotate([-90,-90,0]) {
     positioned_rails();

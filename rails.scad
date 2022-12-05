@@ -7,6 +7,8 @@ d = 0.025;
 inset = 0.025;
 eps = 0.01;
 difference_gap = 0.003;
+break_position = 0.9;
+break_gap = 0.001;
 
 //cube();
 
@@ -40,16 +42,26 @@ module sled_with_rails(maze1) {
 
 
 module positioned_rails() {
-    break_position = 0.9;
-    rail(break_position);
-    translate([break_position+0.01, 0, 0])
-    rail(1-break_position-0.01);
+    rail_B();
+    translate([break_position+break_gap, 0, 0])
+    rail_C();
     
     translate([0.15, 0, 0])
     translate([0,.5,0])
     mirror([0,1,0])
     translate([0,-.5,0])
+    rail_A();
+}
+
+module rail_A() {
     rail(0.76);
+}
+
+module rail_B() {
+    rail(break_position);
+}
+module rail_C() {
+    rail(0.97-break_position-break_gap);
 }
 
 //translate([(2*wall_radius + spacing/2), 0, 0])

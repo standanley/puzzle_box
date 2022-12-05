@@ -3,16 +3,16 @@ wall_radius = 0.05;//1/22;
 spacing = (1-2*wall_radius)/5;//hall_thickness + wall_radius * 2;
 hall_thickness = spacing - wall_radius*2;
 pointer_thickness = hall_thickness - 0.01;
-fn = 10;
+fn = 16;
 
-slide_init = 0*(2*wall_radius + spacing/2);//0*0.99*spacing;
-together = 0*spacing + 0*0.51*spacing + 0*spacing*$t;
+slide_init = 1*(2*wall_radius + spacing/2);//0*0.99*spacing;
+together = 2*spacing + 0*0.51*spacing + 0*spacing*$t;
 slide_a = slide_init + together + 0*spacing;
 slide_b = slide_init + together + 0*spacing;
 slide_c = slide_init + together + 0*spacing;
 
 
-
+//special_sphere(1);
 
 module sled(maze_info) {
     //translate([rail_thickness,rail_thickness,0]) cube([1-rail_thickness, 2*rail_thickness, rail_thickness]);
@@ -49,16 +49,28 @@ module sled(maze_info) {
     
 }
 
+module special_sphere(r) {
+    // make edges line up with cylinders
+    rotate([0,-90,0])
+    rotate_extrude($fn=fn) {
+        difference() {
+            circle(r, $fn=fn);
+            translate([-2*r,0,0])
+            square(4*r, center=true);
+        }
+    }
+}
 
 module wall_segment(length, radius1, radius2) {
     r1 = radius1;// - wall_shrink;
     r2 = radius2;// - wall_shrink;
     union () {
         translate([0,0,0]) cylinder(length, r1, r2, $fn=fn);
-        translate([0,0,0]) sphere(r1, $fn=fn);
-        translate([0,0,length]) sphere(r2, $fn=fn);
+        translate([0,0,0]) special_sphere(r1, $fn=fn);
+        translate([0,0,length]) special_sphere(r2, $fn=fn);
     }
 }
+//wall_segment(1, .2, .2);
 
 module wall(x, y, r, length, shorten1, shorten2, radius1=wall_radius, radius2=wall_radius) {
     l2 = length - (shorten1 + shorten2) * radius1;
