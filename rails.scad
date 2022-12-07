@@ -9,6 +9,9 @@ eps = 0.01;
 difference_gap = 0.003;
 break_position = 0.9;
 break_gap = 0.001;
+// With v1 I discovered that the rails don't slide nicely
+// rather than reprint the mazes, I decided to shrink the rails
+rail_gap_v2 = -0.002;
 
 //cube();
 
@@ -54,14 +57,14 @@ module positioned_rails() {
 }
 
 module rail_A() {
-    rail(0.76);
+    rail(0.76, rail_gap_v2);
 }
 
 module rail_B() {
-    rail(break_position);
+    rail(break_position, rail_gap_v2);
 }
 module rail_C() {
-    rail(0.97-break_position-break_gap);
+    rail(0.97-break_position-break_gap, rail_gap_v2);
 }
 
 //translate([(2*wall_radius + spacing/2), 0, 0])

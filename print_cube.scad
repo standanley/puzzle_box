@@ -18,7 +18,7 @@ include <rails.scad>
 
 //maze_print(maze_a);
 //maze_print(maze_b);
-maze_print(maze_c);
+//maze_print(maze_c);
 
 //print_Z();
 //print_A();
@@ -27,7 +27,7 @@ maze_print(maze_c);
 //print_D();
 //print_E();
 
-//print_rails();
+print_rails();
 
 
 wall_thickness = 0.05;
