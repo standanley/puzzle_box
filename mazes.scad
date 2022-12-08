@@ -178,22 +178,48 @@ module maze(info) {
             wall(spacing*si[0], spacing*si[1], si[2], spacing*si[3], si[4], si[5]);
         }
         
-        
+        // contents of union are shared among mazes
+        union() { 
+            // pointer
+            wall(spacing*(5-corner), spacing*5, 45, spacing*pointer_offset*sqrt(2), 0, 0, radius2=pointer_radius);
+            wall(spacing*(5-corner+pointer_offset), spacing*(5+pointer_offset), 0, spacing*(corner-pointer_offset)+3*wall_radius, 0, 0, radius1=pointer_radius, radius2=pointer_radius);
             
-        // pointer
-        wall(spacing*(5-corner), spacing*5, 45, spacing*pointer_offset*sqrt(2), 0, 0, radius2=pointer_radius);
-        wall(spacing*(5-corner+pointer_offset), spacing*(5+pointer_offset), 0, spacing*(corner-pointer_offset)+3*wall_radius, 0, 0, radius1=pointer_radius, radius2=pointer_radius);
-        
-        // rounded start cap
-        r = wall_radius;//-wall_shrink;
-        translate([-pointer_offset*spacing, -pointer_offset*spacing, 0])
-        rotate([0,0,135])
-        rotate_extrude(angle=180, convexity = 10, $fn=fn*2)
-        translate([pointer_radius + wall_radius, 0, 0])
-        rotate(270)
-        circle(r = r, $fn=fn);
+            // rounded start cap
+            r = wall_radius;//-wall_shrink;
+            translate([-pointer_offset*spacing, -pointer_offset*spacing, 0])
+            rotate([0,0,135])
+            rotate_extrude(angle=180, convexity = 10, $fn=fn*2)
+            translate([pointer_radius + wall_radius, 0, 0])
+            rotate(270)
+            circle(r = r, $fn=fn);
+            
+            // bridges for stiffness
+            bridge_inset = corner*spacing/2;
+            translate([bridge_inset, bridge_inset,0]) bridge();
+            translate([5*spacing-bridge_inset,5*spacing-bridge_inset,0]) bridge();
+            
+            
+            
+        }
     
     }
 }
 
-maze(maze_a);
+module bridge() {
+            bridge_angle = 100;
+            // span length of sqrt(2)*corner, scaled by spacing
+            // sin(bridge_angle)*2*r = dist
+            bridge_dist = sqrt(2)*corner * spacing;
+            bridge_r = bridge_dist/(2*sin(bridge_angle));
+            bridge_height = -bridge_r*cos(bridge_angle);
+            translate([0,0,bridge_height])
+            rotate(45, [0,0,1])
+            rotate(-90, [0,1,0])
+            rotate(-bridge_angle)
+            rotate_extrude(angle=bridge_angle*2, convexity = 10, $fn=fn*2)
+            translate([bridge_r, 0, 0])
+            rotate(270)
+            circle(r = wall_radius*0.7, $fn=fn);
+}
+
+//maze(maze_a);
