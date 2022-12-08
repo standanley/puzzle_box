@@ -44,7 +44,7 @@ module sled_with_rails(maze1) {
 }
 
 
-module positioned_rails() {
+module positioned_rails_old() {
     rail_B();
     translate([break_position+break_gap, 0, 0])
     rail_C();
@@ -56,6 +56,12 @@ module positioned_rails() {
     rail_A();
 }
 
+module positioned_rails() {
+    rail_A_positioned();
+    rail_B_positioned();
+    rail_C_positioned();
+}
+
 module rail_A() {
     rail(0.76, rail_gap_v2);
 }
@@ -65,6 +71,22 @@ module rail_B() {
 }
 module rail_C() {
     rail(0.97-break_position-break_gap, rail_gap_v2);
+}
+
+module rail_A_positioned() {
+    translate([0.15, 0, 0])
+    translate([0,.5,0])
+    mirror([0,1,0])
+    translate([0,-.5,0])
+    rail_A();
+}
+
+module rail_B_positioned() {
+    rail_B();
+}
+module rail_C_positioned() {
+    translate([break_position+break_gap, 0, 0])
+    rail_C();
 }
 
 //translate([(2*wall_radius + spacing/2), 0, 0])

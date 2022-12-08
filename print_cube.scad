@@ -27,7 +27,7 @@ include <rails.scad>
 //print_D();
 //print_E();
 
-print_rails();
+//print_rails();
 
 
 wall_thickness = 0.05;
@@ -153,6 +153,7 @@ module cube_B() {
     // pattern1 and pattern2 have to follow some relationship
     pattern1 = [[1,.2], [.9, .2], [.82,.3],[.88,.4],[.9,.35],[.93,.5],[.8,.45],[.77,.5],[.65,.5],[.68,.63],[.66,.66]];
     pattern2 = [[1.0, .8], [0.9, 0.7], [.85, .85]];
+    
     difference() {
         cube_slice(cut_AB+visualization_eps, cut_BC - visualization_eps);
         cut_all(pattern1);

@@ -173,9 +173,6 @@ maze_c = [
 
 
 module maze(info) {
-    translate([-2.5*spacing, -2.5*spacing, 0])
-    for (si = info) {
-        wall(spacing*si[0], spacing*si[1], si[2], spacing*si[3], si[4], si[5]);
     
     
         
@@ -192,7 +189,12 @@ module maze(info) {
     rotate(270)
     circle(r = r, $fn=fn);
     
+    
+    translate([-2.5*spacing, -2.5*spacing, 0])
+    for (si = info) {
+        wall(spacing*si[0], spacing*si[1], si[2], spacing*si[3], si[4], si[5]);
+    
     }
 }
 
-//maze(maze_a);
+maze(maze_a);
