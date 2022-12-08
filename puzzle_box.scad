@@ -2,17 +2,27 @@ include <extrude_test2.scad>
 include <mazes.scad>
 include <rails.scad>
 include <print_cube.scad>
+
+
+slide_init = 1*(2*wall_radius + spacing/2);//0*0.99*spacing;
+together = 4*spacing + 0*0.59*spacing + 0*spacing*$t;
+slide_a = slide_init + together + 0*spacing;
+slide_b = slide_init + together + 0*spacing;
+slide_c = slide_init + together + 0*spacing;
+
+
+
 //cut_cube();
 //cube();
-//cube_top();
-//cube_bottom();
+cube_top();
+cube_bottom();
 
-cube_Z();
-cube_A();
-cube_B();
-cube_C();
-cube_D();
-cube_E();
+//cube_Z();
+//cube_A();
+//cube_B();
+//cube_C();
+//cube_D();
+//cube_E();
 
 box_thickness = 0.1;
 //translate([-2.0,0,0]) 

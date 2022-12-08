@@ -32,7 +32,8 @@ include <rails.scad>
 
 wall_thickness = 0.05;
 cut_depth = wall_thickness*1.001;
-cut_width = 0.007;
+//cut_width = 0.007;
+cut_width = 0.01;
 
 visualization_eps = 0.001;
 cut_ZA = sqrt(3)/6;

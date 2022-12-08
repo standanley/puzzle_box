@@ -7,11 +7,13 @@ d = 0.025;
 inset = 0.025;
 eps = 0.01;
 difference_gap = 0.003;
-break_position = 0.9;
-break_gap = 0.001;
 // With v1 I discovered that the rails don't slide nicely
 // rather than reprint the mazes, I decided to shrink the rails
 rail_gap_v2 = -0.002;
+
+rail_A_opening = 0.08;
+break_position = 0.86;
+break_gap = 0.002;
 
 //cube();
 
@@ -63,18 +65,18 @@ module positioned_rails() {
 }
 
 module rail_A() {
-    rail(0.76, rail_gap_v2);
+    rail(1-rail_A_opening, rail_gap_v2);
 }
 
 module rail_B() {
     rail(break_position, rail_gap_v2);
 }
 module rail_C() {
-    rail(0.97-break_position-break_gap, rail_gap_v2);
+    rail(1-break_position-break_gap, rail_gap_v2);
 }
 
 module rail_A_positioned() {
-    translate([0.15, 0, 0])
+    //translate([0.15, 0, 0])
     translate([0,.5,0])
     mirror([0,1,0])
     translate([0,-.5,0])

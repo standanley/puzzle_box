@@ -18,11 +18,13 @@ cube_alpha();
 //latch_beta();
 //latch_alpha();
 
+
 module cube_alpha() {
     pattern1 = [[.2,0],[.3,.07],[.22,.15],[.1,.1]];
     pattern2 = [[.8,0],[.7,.03], [.55,.12],[.62,.15],[.65,.25],[.56,.28],[.55,.4],[.45,.38],[.38,.29],[.3, .3]];
     pattern3a = [[1,.2], [.9, .2], [.82,.3],[.88,.4],[.9,.35],[.93,.5],[.8,.45],[.77,.5],[.65,.5],[.68,.63],[.66,.66]];
     pattern3b = [[1.0, .8], [0.9, 0.7], [.85, .85]];
+    
     
     difference() {
         cube();
@@ -40,12 +42,15 @@ module cube_alpha() {
         //cut_all(pattern3b);
     }
     
+    
     //cube_C();
     latch_alpha();
     
+    /*
     translate([0,0,1]) rail_B();
     rotate(120, [1,1,1]) translate([0,0,1]) rail_B();
     rotate(240, [1,1,1]) translate([0,0,1]) rail_B();
+    */
 }
 module cube_beta() {
     difference() {
@@ -80,18 +85,17 @@ module cube_beta() {
 }
 
 module latch_alpha() {
+    
     difference() {
         cube_bottom();
         
-        rotate([0,0,180])
-        rotate(atan(sqrt(2)), v=[1,-1,0])
-        translate([0,0,-1+cut_latch_alpha])
-        cube([2,2,2], center=true);
+        magic_pyramid();
         
-        //rotate(-atan(sqrt(2)), v=[1,-1,0])
-        //linear_extrude(2)
-        //rotate(45)
-        //circle(latch_beta_cutout,$fn=3);
+        //rotate([0,0,180])
+        //rotate(atan(sqrt(2)), v=[1,-1,0])
+        //translate([0,0,-1+cut_latch_alpha])
+        //cube([2,2,2], center=true);
+        
     }
 }
 module latch_beta() {
@@ -104,3 +108,37 @@ module latch_beta() {
         circle(latch_beta_cutout,$fn=3);
     }
 }
+
+
+module magic_pyramid() {
+    // magic shape to cut away to allow the wall thickness to change gradually
+    // "Angle" is the overhang angle we have to print, but it's helped by some nearby things with more gradual overhang
+    // if you want to adjust angle, you will have to adjust angle_radius too
+    // I never want to touch it again
+    flat_radius = 0.56;
+    angle = 50;
+    angle_radius = 0.98;
+    
+    
+    rotate(-atan(sqrt(2)), v=[1,-1,0])
+    translate([0,0,.5]) rotate(45)
+    difference() {
+        cube(1.65, center=true);
+        for (i = [0:2] ) {
+            translate([0,0,1.7])
+            cube(2, center=true);
+            
+            rotate(120*i)
+            translate([flat_radius,0,0])
+            translate([1,0,0]) cube(2, center=true);
+            
+            
+            rotate(60+120*i)
+            translate([angle_radius,0,0])
+            rotate(-angle, [0,1,0])
+            translate([1,0,0]) cube(2, center=true);
+        }
+    }
+}
+
+ //magic_pyramid();
