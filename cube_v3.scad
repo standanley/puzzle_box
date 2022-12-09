@@ -7,8 +7,8 @@ cut_latch_alpha = 0.95;
 cut_latch_beta = 1.2;
 latch_beta_cutout = 0.58;
 
-rotate(atan(sqrt(2)), v=[1,-1,0])
-cube_alpha();
+//rotate(atan(sqrt(2)), v=[1,-1,0])
+//cube_alpha();
 
 //translate([0,0,sqrt(3)]) rotate(180+atan(sqrt(2)), v=[1,-1,0]) 
 //cube_beta();
@@ -27,32 +27,37 @@ module cube_alpha() {
     
     
     difference() {
-        cube();
-        translate([wall_thickness,wall_thickness,wall_thickness])
-        cube([1,1,1]*(1-2*wall_thickness));
-        rotate(-atan(sqrt(2)), v=[1,-1,0])
-        translate([0,0,
-1+cut_latch_alpha+0.01])
-        cube([2,2,2], center=true);
-        
-        cut_all(pattern1);
-        //cut_all(pattern2);
-        //cut_all(pattern3a);
-        //translate([1,1,1]) rotate(60, [1,1,1]) mirror([1,1,1])
-        //cut_all(pattern3b);
+        union() {
+            difference() {
+                cube();
+                translate([wall_thickness,wall_thickness,wall_thickness])
+                cube([1,1,1]*(1-2*wall_thickness));
+                rotate(-atan(sqrt(2)), v=[1,-1,0])
+                translate([0,0,
+        1+cut_latch_alpha+0.01])
+                cube([2,2,2], center=true);
+                
+                cut_all(pattern1);
+                cut_all(pattern2);
+                cut_all(pattern3a);
+            }
+            latch_alpha();
+        }
+
+        translate([1,1,1]) rotate(60, [1,1,1]) mirror([1,1,1])
+        cut_all(pattern3b);
+    
     }
     
     
-    //cube_C();
-    latch_alpha();
     
-    /*
     translate([0,0,1]) rail_B();
     rotate(120, [1,1,1]) translate([0,0,1]) rail_B();
     rotate(240, [1,1,1]) translate([0,0,1]) rail_B();
-    */
+    
 }
 module cube_beta() {
+    pattern4 = [[.58,0],[.62,.12],[.4,.07],[.5,.18],[.4,.2],[.22,.08],[.15,.08],[.2,.17],[.16,.16]];
     difference() {
         cube();
         translate([wall_thickness,wall_thickness,wall_thickness])
@@ -61,11 +66,8 @@ module cube_beta() {
         translate([0,0,-1+cut_latch_beta-0.01])
         cube([2,2,2], center=true);
         
-        //cut_all(pattern1);
-        //cut_all(pattern2);
-        //cut_all(pattern3a);
-        //translate([1,1,1]) rotate(60, [1,1,1]) mirror([1,1,1])
-        //cut_all(pattern3b);
+        translate([1,1,1]) rotate(60, [1,1,1]) mirror([1,1,1])
+        cut_all(pattern4);
     }
     
     latch_beta();

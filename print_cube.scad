@@ -232,7 +232,7 @@ module latch_bottom(){
 
 
 module maze_print(maze1) {
-    translate([0,1,wall_radius*2])
-    rotate([180,0,0])
+    //translate([0,1,wall_radius*2])
+    //rotate([180,0,0])
     sled_with_rails(maze1);
 }

@@ -5,7 +5,7 @@ include <print_cube.scad>
 
 
 slide_init = 1*(2*wall_radius + spacing/2);//0*0.99*spacing;
-together = 4*spacing + 0*0.59*spacing + 0*spacing*$t;
+together = 1*spacing + 0*0.59*spacing + 0*spacing*$t;
 slide_a = slide_init + together + 0*spacing;
 slide_b = slide_init + together + 0*spacing;
 slide_c = slide_init + together + 0*spacing;
